@@ -1,1 +1,25 @@
-TODO: Update
+_metadata:
+  major_version: 1
+  minor_version: 1
+display_information:
+  name: My Notification App
+features:
+  bot_user:
+    display_name: My Notification App
+    always_online: false
+oauth_config:
+  scopes:
+    bot:
+      - channels:read
+      - chat:write
+      - chat:write.customize
+      - im:write
+      - links:write
+      - mpim:write
+      - users:read
+      - users:read.email
+      - chat:write.public
+settings:
+  org_deploy_enabled: false
+  socket_mode_enabled: false
+  token_rotation_enabled: false
