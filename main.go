@@ -15,8 +15,6 @@ const (
 	target     = "git-notifications-test-314141" // public channel example
 	userToPing = "jakenelson@myemail.com"
 	sender     = "My Notification App"
-
-//target = "ipr-gcp-internal" // private channels are not found when browsing the conversations list even when the app is invited (probably due to permissions.)
 )
 
 // isEmail checks if the string is an email address
@@ -91,7 +89,7 @@ func main() {
 
 	// Compose a message
 	log.Infof("Building message for target: %v", targetID)
-	message := fmt.Sprintf("Hi, this is a test from %v\n\nHere, have some **bold**\n\nHow about an emoji? 💡\n\nHow about a code block?\n```Step 1. Build Github App\nStep 2. ?\nStep 3. Profit!```\nNow let's try pinging someone like @%v", sender, userTag.Name)
+	message := fmt.Sprintf("Hi, this is a test from %v\n\nOkay, it's not really, I'm actually just a slack app that's pretending.\n\n Here, have an emoji? 💡\n\nHow about a code block?\n```Step 1. Build Github App\nStep 2. ?\nStep 3. Profit!```\nNow let's try pinging someone like @%v", sender, userTag.Name)
 	msgText := slack.NewTextBlockObject("mrkdwn", message, false, false)
 	msgSection := slack.NewSectionBlock(msgText, nil, nil)
 	msg := slack.MsgOptionBlocks(
