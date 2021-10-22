@@ -70,5 +70,5 @@ func getTargetId(client *slack.Client, target string) (id string, err error) {
 		}
 	}
 
-	return "", fmt.Errorf("we didn't manage to find the group you asked for (%v)", target)
+	return "", fmt.Errorf("we didn't manage to find the group/user you asked for (%v)", target)
 }
