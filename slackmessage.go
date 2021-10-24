@@ -8,14 +8,34 @@ import (
 	"github.com/slack-go/slack"
 )
 
+type SlackMessageOptions struct {
+	TranslateEmails   bool `json:"translate-emails,omitempty"`   // translate any email addresses into users and tag them if they exist in the available teams
+	TranslateChannels bool `json:"translate-channels,omitempty"` // translate any matches of '#<name>' to mention a channel if it exists
+}
 type SlackMessage struct {
-	Target  string
-	Message string `json:"message,omitempty"`
-	Blocks  string `json:"blocks,omitempty"`
+	Target         string
+	Message        string              `json:"message,omitempty"`
+	Blocks         string              `json:"blocks,omitempty"`
+	MessageOptions SlackMessageOptions `json:"message-options,omitempty"`
 }
 
 func (sm SlackMessage) Send() error {
+
+	// Build the logger
 	log.SetFormatter(&log.JSONFormatter{})
+	switch logginglevel := os.Getenv("SLACK_MESSAGE_VERBOSITY"); logginglevel {
+	case "trace":
+		log.SetLevel(log.TraceLevel)
+	case "warn":
+		log.SetLevel(log.WarnLevel)
+	case "debug":
+		log.SetLevel(log.DebugLevel)
+	default:
+		// when verbosity isn't set, we'll use the default (info level)
+		log.SetLevel(log.InfoLevel)
+	}
+
+	// Read the SLACK token from environment variables
 	token := os.Getenv("SLACK_API_TOKEN")
 	if token == "" {
 		return fmt.Errorf("missing SLACK_API_TOKEN variable")

@@ -3,6 +3,7 @@ package main
 import (
 	"encoding/json"
 	"fmt"
+	"reflect"
 
 	log "github.com/sirupsen/logrus"
 	"github.com/slack-go/slack"
@@ -38,6 +39,15 @@ func buildMessage(sm SlackMessage) (options slack.MsgOption, err error) {
 		return options, nil
 	} else {
 		return nil, fmt.Errorf("both Message and Blocks were undefined, you must provide one")
+	}
+}
+
+func replaceEmails(options slack.MsgOption) {
+	v := reflect.ValueOf(options)
+	typeOfS := v.Type()
+
+	for i := 0; i < v.NumField(); i++ {
+		fmt.Printf("Field: %s\tValue: %v\n", typeOfS.Field(i).Name, v.Field(i).Interface())
 	}
 }
 
